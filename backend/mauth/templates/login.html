@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/pico.pink.min.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <title>GeoMeeting</title>
+</head>
+<body>
+    <header>
+    </header>
+    <main class="container">
+        <div id="login_article" class="container">
+            <div class="grid">
+                <hgroup>
+                    <h1>GeoMeeting</h2>
+                    <p>For managing global events !</p>
+                </hgroup>
+            </div>
+            <article>
+                <div class="container">
+                    <a href="#"><button class="outline"><img src="{% static 'images/Google_G_logo.svg' %}" alt=""> Log In with Google</button></a>
+                </div>
+                <hr class="rounded">
+                <form method="post" action="/auth/login">
+                    {% csrf_token %}
+                <fieldset>
+                    <label>
+                        Email
+                        <input type="email" name="email" placeholder="Email" autocomplete="email"/>
+                    </label>
+                    <label>
+                        Email
+                        <input type="password" name="password" placeholder="password" autocomplete="current-password"/>
+                    </label>
+                </fieldset>
+                <input type="submit" value="Log In"/>
+                </form>
+            </article>
+        </div>
+    </main>
+</body>
+<style>
+    
+
+    #login_article {
+        max-width: 510px;
+    }
+</style>
+</html>
