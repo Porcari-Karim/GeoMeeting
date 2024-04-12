@@ -9,6 +9,7 @@ services :
       POSTGRES_PASSWORD: mysecretpassword
       POSTGRES_USER: root
       POSTGRES_DB: geomeeting
+      PGDATA: /var/lib/postgresql/data
     ports:
       - "443:5432"
     volumes:
