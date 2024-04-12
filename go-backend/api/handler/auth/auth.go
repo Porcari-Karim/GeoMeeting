@@ -1,4 +1,4 @@
-package handler
+package auth
 
 import (
 	"fmt"
@@ -7,22 +7,18 @@ import (
 	"os"
 )
 
-var authHandler *http.ServeMux
 var loginTemplate, logoutTemplate *template.Template
 
-func initAuth(rootMux *http.ServeMux) {
+func InitAuth(rootMux *http.ServeMux) {
 	loginTemplate = template.Must(template.ParseFiles("./web/templates/login.html"))
 	logoutTemplate = template.Must(template.ParseFiles("./web/templates/logout.html"))
 
-	authHandler = http.NewServeMux()
-	rootMux.Handle("/auth/", http.StripPrefix("/auth", authHandler))
+	rootMux.HandleFunc("GET /auth/login", loginHandler)
+	rootMux.HandleFunc("POST /auth/login", loginHandler)
+	rootMux.HandleFunc("GET /auth/logout", logoutHandler)
 
-	authHandler.HandleFunc("GET /login", loginHandler)
-	authHandler.HandleFunc("POST /login", loginHandler)
-	authHandler.HandleFunc("GET /logout", logoutHandler)
-
-	authHandler.HandleFunc("/o/google/", googleOAuthHandler)
-	authHandler.HandleFunc("/o/google/callback/", googleOAuthCallbackHandler)
+	rootMux.HandleFunc("GET /auth/o/google/", googleOAuthHandler)
+	rootMux.HandleFunc("GET /auth/o/google/callback/", googleOAuthCallbackHandler)
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {

@@ -5,18 +5,14 @@ import (
 	"net/http"
 )
 
-var baseHandler *http.ServeMux
 var indexTemplate *template.Template
 
-func initBase(rootMux *http.ServeMux) {
+func InitBase(rootMux *http.ServeMux) {
 	indexTemplate = template.Must(template.ParseFiles("./web/templates/index.html"))
 
-	baseHandler = http.NewServeMux()
-	rootMux.Handle("/", baseHandler)
 	staticFilesHandler := http.StripPrefix("/static/", http.FileServer(http.Dir("./web/static")))
-	baseHandler.Handle("GET /static/", staticFilesHandler)
-
-	baseHandler.HandleFunc("/", indexHandler)
+	rootMux.Handle("GET /static/", staticFilesHandler)
+	rootMux.HandleFunc("GET /", indexHandler)
 
 }
 
