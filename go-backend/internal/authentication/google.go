@@ -1,4 +1,4 @@
-package auth
+package authentication
 
 import (
 	"encoding/json"
@@ -23,8 +23,8 @@ type GoogleUserBasicInfo struct {
 	Email           string `json:"email"`
 }
 
-func getGoogleUserInfoFromCallback(r *http.Request) (GoogleUserBasicInfo, error) {
-	tokenResponse, err := getGoogleAccessToken(r)
+func GetGoogleUserInfoFromCallback(r *http.Request) (GoogleUserBasicInfo, error) {
+	tokenResponse, err := GetGoogleAccessToken(r)
 	if err != nil {
 		return GoogleUserBasicInfo{}, err
 	}
@@ -54,7 +54,7 @@ func getGoogleUserInfoFromCallback(r *http.Request) (GoogleUserBasicInfo, error)
 
 }
 
-func getGoogleAccessToken(r *http.Request) (GoogleTokenResponse, error) {
+func GetGoogleAccessToken(r *http.Request) (GoogleTokenResponse, error) {
 	queryParams := r.URL.Query()
 	data := url.Values{
 		"code":          {queryParams.Get("code")},

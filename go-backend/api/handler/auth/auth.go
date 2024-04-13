@@ -2,6 +2,7 @@ package auth
 
 import (
 	"fmt"
+	"github.com/Porcari-Karim/GeoMeeting/internal/authentication"
 	"html/template"
 	"net/http"
 	"os"
@@ -44,7 +45,7 @@ func googleOAuthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func googleOAuthCallbackHandler(w http.ResponseWriter, r *http.Request) {
-	userInfo, err := getGoogleUserInfoFromCallback(r)
+	userInfo, err := authentication.GetGoogleUserInfoFromCallback(r)
 	if err != nil {
 		fmt.Println(err)
 		w.WriteHeader(http.StatusBadRequest)
