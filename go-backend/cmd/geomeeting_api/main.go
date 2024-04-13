@@ -17,20 +17,10 @@ func main() {
 	}
 
 	db.Connect()
-	defer func() {
-		err := db.DB.Close()
-		if err != nil {
-			panic(err)
-		}
-	}()
+	defer db.Close()
 
 	cache.Connect()
-	defer func() {
-		err := cache.Cache.Close()
-		if err != nil {
-			panic(err)
-		}
-	}()
+	defer cache.Close()
 
 	handler.Init()
 	err = http.ListenAndServe(":8080", handler.GlobalHandler)

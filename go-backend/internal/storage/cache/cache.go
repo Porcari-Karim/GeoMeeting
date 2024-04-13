@@ -1,11 +1,12 @@
 package cache
 
 import (
+	"errors"
 	"github.com/redis/go-redis/v9"
 	"os"
 )
 
-var Cache *redis.Client = nil
+var cache *redis.Client = nil
 
 func Connect() {
 	rdUrl := os.Getenv("REDIS_URL")
@@ -14,5 +15,19 @@ func Connect() {
 		panic(err)
 	}
 
-	Cache = redis.NewClient(opt)
+	cache = redis.NewClient(opt)
+}
+
+func Close() {
+	err := cache.Close()
+	if err != nil {
+		panic(err)
+	}
+}
+
+func GetInstance() (*redis.Client, error) {
+	if cache == nil {
+		return nil, errors.New("error: Cache can't be 'nil' try to 'Initialize'")
+	}
+	return cache, nil
 }
